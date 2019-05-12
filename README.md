@@ -9,12 +9,19 @@ Pile basic skill up
     - `hello_world.go` ... Hello, World!!  
       Hello, Worldは飛ばす派です  
       print文系を盛り込んだだけ
+    - `fmt_etc.go` ... Trying Stringer etc.  
+    fmt系の色々を試す場所
 
 ## Memorandum
 ### Etiquette
 - `go fmt`: Most action before commit  
     Goのオフィシャルフォーマッタの適用
 - `go lint`: Suggesting points that you should fix
+    推奨される修正の提案
+
+### Lint Tool
+- [errcheck](https://github.com/kisielk/errcheck)
+- [maligned](https://github.com/mdempsky/maligned)
 
 ## Author
 [Yusei](https://github.com/index30)
