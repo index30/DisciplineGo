@@ -4,6 +4,7 @@ import "fmt"
 
 type Degree float64
 
+// 定数の定義
 const (
 	Celsius    Degree = 0  // 摂氏
 	Fahrenheit        = 32 // 華氏
@@ -24,10 +25,23 @@ const (
 	ColdSense       = "cold"
 )
 
+//追加要素
+/*
+Builderに束縛されているので, 抜け漏れがある場合ビルド時に分かる
+*/
+type Decision string
+
+const (
+	GoOut Decision = "fishing"
+	Home           = "game"
+)
+
+// メソッド宣言
 type Builder interface {
 	Weather(Weather) Builder
 	Sense(Sense) Builder
 	FahrenheitDegree(Degree) Builder
+	Decision(Decision) Builder
 	Build() Interface
 }
 
@@ -37,20 +51,23 @@ type Interface interface {
 }
 
 type forecastBuilder struct {
-	weather Weather
-	sense   Sense
-	degree  Degree
+	weather  Weather
+	sense    Sense
+	degree   Degree
+	decision Decision
 }
 
 type forecast struct {
 	params forecastBuilder
 }
 
+//デフォルト値の指定
 func NewBuilder() *forecastBuilder {
 	return &forecastBuilder{
-		weather: RainyWeather,
-		sense:   HotSense,
-		degree:  Celsius,
+		weather:  RainyWeather,
+		sense:    HotSense,
+		degree:   Celsius,
+		decision: GoOut,
 	}
 }
 
@@ -66,6 +83,11 @@ func (b *forecastBuilder) Sense(sense Sense) Builder {
 
 func (b *forecastBuilder) FahrenheitDegree(degree Degree) Builder {
 	b.degree = degree
+	return b
+}
+
+func (b *forecastBuilder) Decision(decision Decision) Builder {
+	b.decision = decision
 	return b
 }
 
@@ -86,7 +108,7 @@ func (f *forecast) Stop() error {
 }
 
 func main() {
-	forecast := NewBuilder().Weather(CloudWeather).Sense(HotSense).FahrenheitDegree(Fahrenheit).Build()
+	forecast := NewBuilder().Weather(CloudWeather).Sense(HotSense).FahrenheitDegree(Fahrenheit).Decision(GoOut).Build()
 	forecast.Observe()
 	forecast.Stop()
 }
