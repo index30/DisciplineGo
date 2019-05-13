@@ -11,6 +11,8 @@ Pile basic skill up
       print文系を盛り込んだだけ
     - `fmt_etc.go` ... Trying Stringer etc.  
     fmt系の色々を試す場所
+    - `builder_pattern.go` ... Builder Pattern
+    ダックタイピングに関わるあれこれ(後ほど詳細を詰める予定)
 
 ## Memorandum
 ### Etiquette
@@ -18,6 +20,9 @@ Pile basic skill up
     Goのオフィシャルフォーマッタの適用
 - `go lint`: Suggesting points that you should fix
     推奨される修正の提案
+
+### Go Patterns
+[GoPatterns](http://tmrts.com/go-patterns/)は慣用的な実践パターンのtips集
 
 ### Lint Tool
 - [errcheck](https://github.com/kisielk/errcheck)
