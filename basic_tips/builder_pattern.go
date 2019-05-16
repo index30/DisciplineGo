@@ -2,53 +2,23 @@ package main
 
 import "fmt"
 
-type Degreeval string
-
-// 定数の定義
-const (
-	Celsius    Degreeval = "celsius"    // 摂氏
-	Fahrenheit           = "fahrenheit" // 華氏
-)
-
 type Degree float64
-
-const (
-	Observed Degree = 0
-)
-
+type Sense string
 type Weather string
 
 const (
-	SunnyWeather Weather = "sunny"
-	CloudWeather         = "cloud"
-	RainyWeather         = "rainy"
+	Observed      Degree  = 0
+	HotSense      Sense   = "hot"
+	ColdSense             = "cold"
+	SunnyWeather  Weather = "sunny"
+	CloudyWeather         = "cloudy"
+	RainyWeather          = "rainy"
 )
 
-type Sense string
-
-const (
-	HotSense  Sense = "hot"
-	ColdSense       = "cold"
-)
-
-//追加要素
-/*
-Builderに束縛されているので, 抜け漏れがある場合ビルド時に分かる
-*/
-type Decision string
-
-const (
-	GoOut Decision = "fishing"
-	Home           = "game"
-)
-
-// メソッド宣言
 type Builder interface {
-	Weather(Weather) Builder
+	Degree(Degree) Builder
 	Sense(Sense) Builder
-	CelsiusDegree(Degree) Builder
-	Degreeval(Degreeval) Builder
-	Decision(Decision) Builder
+	Weather(Weather) Builder
 	Build() Interface
 }
 
@@ -57,75 +27,109 @@ type Interface interface {
 	Stop() error
 }
 
-type forecastBuilder struct {
-	weather   Weather
-	sense     Sense
-	degreeval Degreeval
-	degree    Degree
-	decision  Decision
+type CelsiusBuilder struct {
+	degree  Degree
+	sense   Sense
+	weather Weather
 }
 
-type forecast struct {
-	params forecastBuilder
+type celsius struct {
+	params CelsiusBuilder
 }
 
-//デフォルト値の指定
-func NewBuilder() *forecastBuilder {
-	return &forecastBuilder{
-		weather:   RainyWeather,
-		sense:     HotSense,
-		degreeval: Celsius,
-		degree:    Observed,
-		decision:  GoOut,
+func NewCelsiusBuilder() *CelsiusBuilder {
+	return &CelsiusBuilder{
+		degree:  Observed,
+		sense:   HotSense,
+		weather: SunnyWeather,
 	}
 }
 
-func (b *forecastBuilder) Weather(weather Weather) Builder {
-	b.weather = weather
-	return b
+func (c *CelsiusBuilder) Degree(degree Degree) Builder {
+	c.degree = degree
+	return c
 }
 
-func (b *forecastBuilder) Sense(sense Sense) Builder {
-	b.sense = sense
-	return b
+func (c *CelsiusBuilder) Sense(sense Sense) Builder {
+	c.sense = sense
+	return c
 }
 
-func (b *forecastBuilder) CelsiusDegree(degree Degree) Builder {
-	b.degree = degree
-	return b
+func (c *CelsiusBuilder) Weather(weather Weather) Builder {
+	c.weather = weather
+	return c
 }
 
-func (b *forecastBuilder) Degreeval(degreeval Degreeval) Builder {
-	b.degreeval = degreeval
-	return b
-}
-
-func (b *forecastBuilder) Decision(decision Decision) Builder {
-	b.decision = decision
-	return b
-}
-
-func (b *forecastBuilder) Build() Interface {
-	if b.degreeval == "fahrenheit" {
-		b.degree = b.degree - 32
-	}
-	return &forecast{
-		params: *b,
+func (c *CelsiusBuilder) Build() Interface {
+	return &celsius{
+		params: *c,
 	}
 }
 
-func (f *forecast) Observe() error {
+func (c *celsius) Observe() error {
+	fmt.Printf("Observe: %#+v\n", c.params)
+	return nil
+}
+
+func (c *celsius) Stop() error {
+	fmt.Printf("Stop: %#+v\n", c.params)
+	return nil
+}
+
+type FahrenheitBuilder struct {
+	degree  Degree
+	sense   Sense
+	weather Weather
+}
+
+type fahrenheit struct {
+	params FahrenheitBuilder
+}
+
+func NewFahrenheitBuilder() *FahrenheitBuilder {
+	return &FahrenheitBuilder{
+		degree:  Observed,
+		sense:   HotSense,
+		weather: SunnyWeather,
+	}
+}
+
+func (f *FahrenheitBuilder) Degree(degree Degree) Builder {
+	f.degree = degree
+	return f
+}
+
+func (f *FahrenheitBuilder) Sense(sense Sense) Builder {
+	f.sense = sense
+	return f
+}
+
+func (f *FahrenheitBuilder) Weather(weather Weather) Builder {
+	f.weather = weather
+	return f
+}
+
+func (f *FahrenheitBuilder) Build() Interface {
+	return &fahrenheit{
+		params: *f,
+	}
+}
+
+func (f *fahrenheit) Observe() error {
 	fmt.Printf("Observe: %#+v\n", f.params)
 	return nil
 }
 
-func (f *forecast) Stop() error {
+func (f *fahrenheit) Stop() error {
 	fmt.Printf("Stop: %#+v\n", f.params)
 	return nil
 }
 
 func main() {
-	forecast := NewBuilder().Weather(CloudWeather).Sense(HotSense).CelsiusDegree(52).Degreeval(Fahrenheit).Decision(GoOut).Build()
-	forecast.Observe()
-	forecast.Stop()
+	celsius := NewCelsiusBuilder().Weather(SunnyWeather).Sense(HotSense).Degree(25).Build()
+	fahrenheit := NewFahrenheitBuilder().Weather(CloudyWeather).Sense(ColdSense).Degree(10).Build()
+	celsius.Observe()
+	fahrenheit.Observe()
+	celsius.Stop()
+	fahrenheit.Stop()
 }

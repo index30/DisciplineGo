@@ -11,8 +11,10 @@ Pile basic skill up
       print文系を盛り込んだだけ
     - `fmt_etc.go` ... Trying Stringer etc.  
     fmt系の色々を試す場所
-    - `builder_pattern.go` ... Builder Pattern
-    ダックタイピングに関わるあれこれ(後ほど詳細を詰める予定)
+    - `builder_pattern.go` ... Builder Pattern  
+    ダックタイピングに関わるあれこれ  
+    Builderを介して構築することで、ビルド時の抜け漏れや新たな要件を定義しやすくしている  
+    後ほど詳細記述予定
 
 ## Memorandum
 ### Etiquette
