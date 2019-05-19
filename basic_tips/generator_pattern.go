@@ -3,6 +3,8 @@ package main
 import (
 	"context"
 	"fmt"
+	"os"
+	"os/signal"
 	"time"
 )
 
@@ -64,10 +66,32 @@ func main() {
 		fmt.Println(i)
 	}
 	fmt.Println("----------------------------------")
+	// When timeout, cancel the process of Count
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
-
 	for i := range CountInterrupt(ctx, 1, 99) {
 		fmt.Println(i)
+	}
+
+	fmt.Println("----------------------------------")
+	// When canceled by user, stop the process of Count
+	ctx2, cancel2 := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel2()
+
+	canceled := false
+	sc := make(chan os.Signal, 1)
+	signal.Notify(sc, os.Interrupt)
+	go func() {
+		<-sc
+		cancel2()
+		canceled = true
+	}()
+
+	for i := range CountInterrupt(ctx2, 1, 99) {
+		fmt.Println(i)
+	}
+
+	if canceled {
+		fmt.Fprintln(os.Stderr, "canceled")
 	}
 }
