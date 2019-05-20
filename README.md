@@ -17,6 +17,7 @@ Pile basic skill up
     加えて, BuilderやInterfaceによって実際のコードを隠蔽でき, テストも簡単になる  
     - `generator_pattern.go` ... Generator Pattern  
     ジェネレータについて
+    - `make_cli` ... About CLI Tool([link](#CLI))
 
 ## Memorandum
 ### Etiquette
@@ -31,6 +32,14 @@ Pile basic skill up
 ### Lint Tool
 - [errcheck](https://github.com/kisielk/errcheck)
 - [maligned](https://github.com/mdempsky/maligned)
+
+### CLI
+
+```
+$ mkdir cli_dir
+$ cd cli_dir
+$ go mod init cli_dir 
+```
 
 ## Author
 [Yusei](https://github.com/index30)
