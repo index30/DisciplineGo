@@ -17,7 +17,8 @@ Pile basic skill up
     加えて, BuilderやInterfaceによって実際のコードを隠蔽でき, テストも簡単になる  
     - `generator_pattern.go` ... Generator Pattern  
     ジェネレータについて
-    - `make_cli` ... About CLI Tool([link](#CLI))
+    - `make_cli` ... About CLI Tool([link](#CLI))  
+    メニューを入力するとランダムに返すCLI ([1]参照)
 
 ## Memorandum
 ### Etiquette
@@ -39,10 +40,12 @@ Pile basic skill up
 $ mkdir cli_dir
 $ cd cli_dir
 $ go mod init cli_dir 
+$ (make file in cli_dir)
+$ go build
 ```
 
 ## Author
 [Yusei](https://github.com/index30)
 
 ## Reference
-[Software Design 2019年5月号](https://gihyo.jp/magazine/SD/archive/2019/201905)
+[[1](https://gihyo.jp/magazine/SD/archive/2019/201905)] Software Design 2019年5月号  
