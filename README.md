@@ -19,6 +19,8 @@ Pile basic skill up
     ジェネレータについて
     - `make_cli` ... About CLI Tool([link](#CLI))  
     メニューを入力するとランダムに返すCLI ([1]参照)
+    - `process_log` ... CLI Tool Part2
+    プロセス実行ログCLI([1]参照)
 
 ## Memorandum
 ### Etiquette
