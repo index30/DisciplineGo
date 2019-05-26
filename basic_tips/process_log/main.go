@@ -5,5 +5,8 @@ import (
 )
 
 func main() {
-	fmt.Println("mock")
+	logDir, commandName, args := parser()
+	fmt.Println(logDir)
+	fmt.Println(commandName)
+	fmt.Println(args)
 }
