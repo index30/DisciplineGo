@@ -17,10 +17,12 @@ Pile basic skill up
     加えて, BuilderやInterfaceによって実際のコードを隠蔽でき, テストも簡単になる  
     - `generator_pattern.go` ... Generator Pattern  
     ジェネレータについて
-    - `make_cli` ... About CLI Tool([link](#CLI))  
+    - `make_cli/` ... About CLI Tool([link](#CLI))  
     メニューを入力するとランダムに返すCLI ([1]参照)
-    - `process_log` ... CLI Tool Part2
+    - `process_log/` ... CLI Tool Part2
     プロセス実行ログCLI([1]参照)
+    - `echo_app_mock/` ... Check about "echo"
+    フレームワークEchoの確認. Hello Worldしていきましょう()
 
 ## Memorandum
 ### Etiquette
